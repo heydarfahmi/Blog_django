@@ -1,0 +1,39 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <div class="card">
+            <h2>{{ post.title }}</h2>
+            <h5>post by {{ post.author }} on {{ post.created }}</h5>
+            <div class="fakeimg" style="height:200px;">{{ post.body|linebreaks|truncatewords:30 }}</div>
+            <p> Tags:
+                {#        {{ post.tag.all|join:"," }}#}
+                {% for tag in post.tags.all %}
+
+                    <span class="tag"><a href="{% url "blog:listed_post_by_post" tag.slug %}">{{ tag.name }}</a>
+                    </span>
+
+                    {% if not forloop.last %},{% endif %}
+                    {#                {{ url "blog:post_list_by_tag" tag.slug }}}#}
+                {% endfor %}</p>
+        <a href="http://google.com" class="btn btn-default">Go to Google</a>
+        </div>
+    {% empty %}
+
+        <div class="card">
+            <h2>No post yet</h2>
+            <h5>Title description, Dec 7, 2017</h5>
+            <div class="fakeimg" style="height:200px;">body</div>
+            <p>there is no tags</p>
+
+        </div>
+
+    {% endfor %}
+
+
+{% endblock %}
+{% block footer %}
+    <div class="badge-secondary">
+        {% include 'blog/paginiton.html' with page=posts %}
+    </div>
+
+{% endblock %}

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.utils import timezone
 
 
 # Create your models here.
@@ -11,13 +12,13 @@ class PublishedManager(models.Manager):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=50, null=False, default="No subject, this is post number {} ".format(id))
-    slug = models.SlugField(max_length=300, unique_for_date=True)
+    objects = models.Manager()
+    title = models.CharField(max_length=50, null=False, default="No subject, this is post number {} ".format(0))
+    slug = models.SlugField(max_length=300, unique_for_date='created')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=False)
-    objects = models.Manager()
     published = PublishedManager()
     tags = TaggableManager()
 
@@ -32,11 +33,12 @@ class Post(models.Model):
                                                  self.created.strftime('%m'),
                                                  self.created.strftime('%d'),
                                                  self.slug])
-
-    def re_post(self, User):
-        self.id = None
-        self.title = "Repost {} from {}".format(self, self.author)
-        self.save()
+        #
+        # def re_post(self, User):
+        #     self.id = None
+        #     self.author=User
+        #     self.title = "Repost {} from {}".format(self.title, self.author)
+        #     self.save()
 
 
 class Comment(models.Model):
