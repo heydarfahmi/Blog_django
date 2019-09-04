@@ -29,7 +29,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail', args=[self.created.year,
+        return reverse('blog:post_view', args=[self.created.year,
                                                  self.created.strftime('%m'),
                                                  self.created.strftime('%d'),
                                                  self.slug])

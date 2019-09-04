@@ -1,0 +1,71 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="card">
+        <h2 class="datetime">{{ post.title }}</h2>
+        <h5>post by {{ post.author }} on {{ post.created }}</h5>
+        <div class="text-dark">{{ post.body|linebreaks|truncatewords:3 }}</div>
+        <div class="text-primary">{{ post.body|linebreaks|truncatewords:30 }}</div>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">
+                    {% with comments.count as total_comments %}
+                        {{ total_comments }}Comment{{ total_comments|pluralize }}
+                    {% endwith %}
+                </th>
+                <th scope="col">by :</th>
+                <th scope="col">on :</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comment in comments %}
+
+                <tr>
+                    <th scope="row">{{ comment.id }}</th>
+                    <td>{{ comment.body }}</td>
+                    <td>{{ comment.name }}</td>
+                    <td>{{ comment.created }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <th scope="row">0</th>
+                    <td>No comment</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+        {% if new_comment %}
+            <h2>Your comment has been added.</h2>
+        {% else %}
+            <h2 class="display-4">add new comment</h2>
+            <form action="." method="post" class="form-group row">
+                <div class="flex-lg-row">
+
+                    {{ comment_form.as_p }}
+                    hello
+                    {% csrf_token %}
+                    <p><input type="submit" value="Add Comment"></p>
+                </div>
+
+            </form>
+        {% endif %}
+        <p> Tags:
+            {#        {{ post.tag.all|join:"," }}#}
+            {% for tag in post.tags.all %}
+
+                <span class="badge-light"><a href="{% url "blog:listed_post_by_post" tag.slug %}"
+                                             class="btn-link">{{ tag.name }}</a>
+                    </span>
+
+                {% if not forloop.last %},{% endif %}
+                {#                {{ url "blog:post_list_by_tag" tag.slug }}}#}
+            {% endfor %}</p>
+        <a href="http://google.com" class="btn btn-default">Go to Google</a>
+    </div>
+{% endblock %}

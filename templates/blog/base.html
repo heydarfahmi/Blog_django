@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+{%load static %}
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static "/bootstrap.min.css" %}">
     <style>
         * {
             box-sizing: border-box;
@@ -24,6 +26,96 @@
             color: #17a2b8;
         }
 
+        .table-dark {
+            color: #fff;
+            background-color: #212529
+        }
+
+        .table-dark td, .table-dark th, .table-dark thead th {
+            border-color: #32383e
+        }
+
+        .table-dark.table-bordered {
+            border: 0
+        }
+
+        .table-dark.table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(255, 255, 255, .05)
+        }
+
+        .table-dark.table-hover tbody tr:hover {
+            background-color: rgba(255, 255, 255, .075)
+        }
+
+        @media (max-width: 575.98px) {
+            .table-dark {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar
+            }
+
+            .table-dark > .table-bordered {
+                border: 0
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .table-dark {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar
+            }
+
+            .table-dark > .table-bordered {
+                border: 0
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .table-dark {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar
+            }
+
+            .table-responsive-lg > .table-bordered {
+                border: 0
+            }
+        }
+
+        @media (max-width: 1199.98px) {
+            .table-responsive-xl {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar
+            }
+
+            .table-responsive-xl > .table-bordered {
+                border: 0
+            }
+        }
+
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar
+        }
+
+        .table-responsive > .table-bordered {
+            border: 0
+        }
+
+
         /* Create two unequal columns that floats next to each other */
         /* Left column */
         .leftcolumn {
@@ -32,7 +124,8 @@
             float: left;
             width: 75%;
         }
-        .tag{
+
+        .tag {
             background: rgba(35, 0, 0, 0.96);
             color: #f8f0ff;
 
@@ -146,8 +239,8 @@
 </div>
 
 <div class="footer">
-   {% block footer %}
-    <h2>Footer</h2>
+    {% block footer %}
+        <h2>Footer</h2>
     {% endblock %}
 
 </div>
