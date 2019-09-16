@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from taggit.models import Tag
@@ -38,8 +39,11 @@ def post_view(request, year, month, day, slug):
             comment.save()
     else:
         comment_form = CommentForm()
-
+    tags = list(post.tags.all())
+    similar_post = Post.published.filter(tags__in=tags).exclude(id=post.id)
+    similar_post=similar_post.annotate(tag_count=Count('tags')).order_by('-tag_count','-created')
     return render(request, 'blog/view_post.html', context={'post': post,
                                                             'comments':comments,
                                                             'new_comment':comment,
+                                                           'similars':similar_post,
                                                            'comment_form': comment_form,})

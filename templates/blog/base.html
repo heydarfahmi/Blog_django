@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-{%load static %}
+{% load static %}
+{#{% load templatetags %}#}
+{% load blog_tags %}
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -186,7 +189,8 @@
 
 <div class="header">
     {% block header %}
-        <h2>Blog Name</h2>
+        <h2>Blog Name
+        </h2>
     {% endblock %}
 </div>
 
@@ -217,14 +221,30 @@
     <div class="rightcolumn">
         {% block side %}
             <div class="card">
-                <h2>About Me</h2>
-                <div class="fakeimg" style="height:100px;">Image</div>
-                <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
+                <h2>There is {% total_posts %} posts</h2>
+                <div class="fakeimg" style="height:100px;">my blog contains {% total_posts %} post</div>
             </div>
             <div class="card">
+                <h3>Latest Post</h3>
+                {% show_latest_posts %}
+            </div>
+            <div class="card">
+                <h3>Most commented posts</h3>
+            {% get_most_commented_post as most_commented %}
+                <ul>
+                    <div class="table">
+                        {% for post in most_commented %}
+                            <li>
+                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            </li>
+                            <br>
+                        {% endfor %}
+                    </div>
+                </ul>
+            </div>
+
+            <div class="card">
                 <h3>Popular Post</h3>
-                <div class="fakeimg">Image</div>
-                <br>
                 <div class="fakeimg">Image</div>
                 <br>
                 <div class="fakeimg">Image</div>
