@@ -1,2 +1,2 @@
 # Blog_django
-front base from w3schools,bootstrap
+front base from w3schools
